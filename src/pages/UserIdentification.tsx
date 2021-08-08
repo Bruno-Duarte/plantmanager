@@ -40,7 +40,6 @@ export function UserIdentification() {
     }
 
     function handleSubmit() {
-        console.log('ajdfkja')
         navigation.navigate('Confirmation');
     }
 
@@ -65,7 +64,7 @@ export function UserIdentification() {
                             <TextInput 
                                 style={[
                                     styles.input,
-                                    (isFocused || isFocused) && {borderColor: colors.green}
+                                    (isFocused || isFilled) && {borderColor: colors.green}
                                 ]}
                                 placeholder="Digite um nome"
                                 onBlur={handleInputBlur}
