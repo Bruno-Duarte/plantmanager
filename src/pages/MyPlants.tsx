@@ -13,6 +13,8 @@ import colors from '../styles/colors';
 import { loadPlant, PlantProps } from '../libs/storage';
 import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
+import fonts from '../styles/fonts';
+import { PlantCardSecondary } from '../components/PlantCardSecondary';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
@@ -52,13 +54,13 @@ export function MyPlants() {
                     {nextWaterd}
                 </Text>
             </View>
-            <View>
-                <Text>Próximas regadas</Text>
+            <View style={styles.plants}>
+                <Text style={styles.plantsTitle}>Próximas regadas</Text>
                 <FlatList 
                     data={myPlants}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({item}) => (
-                        <Text>Elemento</Text>
+                        <PlantCardSecondary data={item} />
                     )}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{flex: 1}}
@@ -76,5 +78,33 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingTop: 50,
         backgroundColor: colors.background,
+    },
+    spotlight: {
+        backgroundColor: colors.blue_light,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        height: 110,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    spotlightImage: {
+        width: 60,
+        height: 60,
+    },
+    spotlightText: {
+        flex: 1,
+        color: colors.blue,
+        paddingHorizontal: 20,
+    },
+    plants: {
+        flex: 1,
+        width: '100%',
+    },
+    plantsTitle: {
+        fontSize: 24,
+        fontFamily: fonts.heading,
+        color: colors.heading,
+        marginVertical: 20,
     },
 });
