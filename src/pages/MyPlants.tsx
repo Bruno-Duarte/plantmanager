@@ -15,11 +15,16 @@ import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import fonts from '../styles/fonts';
 import { PlantCardSecondary } from '../components/PlantCardSecondary';
+import { Load } from '../components/Load';
 
 export function MyPlants() {
     const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [nextWaterd, setNextWaterd] = useState<string>();
+
+    function handleRemove(plant: PlantProps) {
+        
+    }
 
     useEffect(() => {
         async function loadStorageData() {
@@ -32,7 +37,7 @@ export function MyPlants() {
             );
 
             setNextWaterd(
-                `Não esqueça de regar a ${plantsStoraged[0].name} às ${nextTime} horas`
+                `Não esqueça de regar a ${plantsStoraged[0].name} a aproximadamente ${nextTime} horas`
             );
 
             setMyPlants(plantsStoraged);
@@ -41,6 +46,8 @@ export function MyPlants() {
 
         loadStorageData();
     });
+
+	if (loading) return <Load />;
 
     return (
         <View style={styles.container}>
@@ -60,7 +67,10 @@ export function MyPlants() {
                     data={myPlants}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({item}) => (
-                        <PlantCardSecondary data={item} />
+                        <PlantCardSecondary 
+                            data={item} 
+                            handleRemove={handleRemove}
+                        />
                     )}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{flex: 1}}
@@ -76,7 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 30,
-        paddingTop: 50,
+        paddingTop: 10,
         backgroundColor: colors.background,
     },
     spotlight: {
