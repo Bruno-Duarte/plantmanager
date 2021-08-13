@@ -24,6 +24,22 @@ export interface StoragePlantProps {
 
 export async function savePlant(plant: PlantProps) : Promise<void> {
     try {
+        const nexTime = new Date(plant.dateTimeNotification);
+        const now = new Date();
+
+        const {times, repeat_every} = plant.frequency;
+
+        if (repeat_every === 'week') {
+            const interval = Math.trunc(7 / times);
+            nexTime.setDate(now.getDate() + interval);
+        } else {
+            nexTime.setDate(nexTime.getDate() + 1);
+        }
+
+        const seconds = Math.abs(
+            Math.ceil(now.getTime() - nexTime.getTime() / 1000)
+        );
+
         const data = await AsyncStorage.getItem('@plantmanager:plants');
         const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {};
 
@@ -68,4 +84,16 @@ export async function loadPlant() : Promise<PlantProps[]> {
     } catch(error) {
         throw new Error(error);
     }
+}
+
+export async function removePlant(id: string) {
+    const data = await AsyncStorage.getItem('@plantmanager:plants');
+    const plants = data ? (JSON.parse(data) as StoragePlantProps) : {};
+
+    delete plants[id];
+
+    await AsyncStorage.setItem(
+        '@plantmanager:plants',
+        JSON.stringify(plants)
+    );
 }
