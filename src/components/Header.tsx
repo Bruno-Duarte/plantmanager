@@ -3,7 +3,7 @@ import {StyleSheet, Text, Image, View} from 'react-native';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import userImg from '../assets/bruno.jpeg';
+import userImg from '../assets/bruno.png';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
